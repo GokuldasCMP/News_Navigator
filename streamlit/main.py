@@ -9,7 +9,7 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 # Tokenization and Model Prediction
-file_path = r"C:\Users\HP\Desktop\News Navigator\saved_models"
+file_path = r"C:\Users\HP\Desktop\News Navigator\streamlit\saved_models"
 tokenizer = DistilBertTokenizer.from_pretrained(file_path)
 model = TFDistilBertForSequenceClassification.from_pretrained(file_path)
 
