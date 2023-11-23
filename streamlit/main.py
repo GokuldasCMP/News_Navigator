@@ -15,7 +15,7 @@ model = TFDistilBertForSequenceClassification.from_pretrained(file_path)
 
 # Streamlit app
 st.title("News Navigator 🧭")
-user_input = st.text_area("Enter News Articles (separated by double line breaks):")
+user_input = st.text_area("If you have multiple articles seperate it  by asterisk symbol(*):")
 classify_button = st.button("Classify")
 result_placeholder = st.empty()
 main_placeholder = st.empty()
@@ -26,7 +26,7 @@ categories = ["Business", "Entertainment", "Politics", "Sports", "Tech"]
 # Move this block inside the if block
 if classify_button and user_input:
     # Split the input into a list of articles
-    articles = [article.strip() for article in user_input.split('$')]
+    articles = [article.strip() for article in user_input.split('*')]
 
     # Process each article
     for idx, article in enumerate(articles, start=1):  # Start index at 1
@@ -44,10 +44,8 @@ if classify_button and user_input:
         # Map numerical category to label (adjust as needed)
         predicted_label = categories[predicted_category]
 
-        # Display the result with HTML styling using st.markdown
-        st.markdown(
-            f"<h2 style='color:#4A712F  ;'>The predicted category for Article {idx} is: {predicted_label}</h2>",
-            unsafe_allow_html=True)
+         # Display the result with st.info
+        st.info(f"The predicted category for Article {idx} is: {predicted_label}")
 
         # Use the article in the prompt for summary generation
         palm.configure(api_key=API_KEY)
@@ -65,6 +63,5 @@ if classify_button and user_input:
         summary = completion.result
 
         # Display the summary on the Streamlit app
-        st.markdown(
-            f"<p style='font-size:18px; color:#fc3535;'>Generated Summary for Article {idx}:</p><p style='font-size:16px;'>{summary}</p>",
-            unsafe_allow_html=True)
+        st.subheader("Generated Summary")
+        st.info(f"Generated Summary for Article {idx}:\n{summary}")
